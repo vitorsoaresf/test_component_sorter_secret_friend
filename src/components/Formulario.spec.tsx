@@ -5,7 +5,11 @@ import userEvent from "@testing-library/user-event";
 import { RecoilRoot } from "recoil";
 
 test("quando o input esta vazio, novos participantes nao podem ser adicionados", () => {
-  render(<Formulario />);
+  render(
+    <RecoilRoot>
+      <Formulario />
+    </RecoilRoot>
+  );
 
   const input = screen.getByPlaceholderText(
     "Insira os nomes dos participantes"
@@ -36,4 +40,31 @@ test("adicionar um participante caso exista um nome preenchido", () => {
 
   expect(input).toHaveFocus();
   expect(input).toHaveValue("");
+});
+
+test("nomes ja adicionados nao ser adicionados novamente", () => {
+  render(
+    <RecoilRoot>
+      <Formulario />
+    </RecoilRoot>
+  );
+
+  const input = screen.getByPlaceholderText(
+    "Insira os nomes dos participantes"
+  );
+
+  const bt = screen.getByRole("button");
+
+  userEvent.type(input, "vitor");
+  userEvent.click(bt);
+
+  userEvent.type(input, "vitor");
+  userEvent.click(bt);
+
+  expect(input).toHaveFocus();
+  expect(input).toHaveValue("");
+
+  const mensagmDeErro = screen.getByRole("alert");
+
+  expect(mensagmDeErro.textContent).toBe("Nomes duplicados nao sao permitidos");
 });
