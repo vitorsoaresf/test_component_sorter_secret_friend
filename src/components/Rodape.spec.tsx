@@ -45,8 +45,8 @@ describe("quando existem participantes suficientes ", () => {
   beforeEach(() => {
     (useListaParticipantes as jest.Mock).mockReturnValue([
       "vitor",
-      "vitor",
-      "vitor",
+      "ana",
+      "joao",
     ]);
   });
 
