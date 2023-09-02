@@ -5,9 +5,11 @@ import { Rodape } from "../components/Rodape";
 export const Configuracao = () => {
   return (
     <>
-      <Formulario />
-      <ListaParticipantes />
-      <Rodape />
+      <section>
+        <Formulario />
+        <ListaParticipantes />
+        <Rodape />
+      </section>
     </>
   );
 };

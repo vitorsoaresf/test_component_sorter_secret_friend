@@ -1,11 +1,15 @@
 import { useState, useRef } from "react";
 import { useAdicionarParticipante } from "../state/hooks/useAdicionarParticipante";
 import { useMensagemDeErro } from "../state/hooks/useMensagemDeErro";
+import "./Formulario.css";
 
 export const Formulario = () => {
   const [nome, setNome] = useState("");
+
   const inputRef = useRef<HTMLInputElement>(null);
+
   const adicionarNaLista = useAdicionarParticipante();
+
   const mensagemDeErro = useMensagemDeErro();
 
   const adicionarParticipante = (evento: React.FormEvent<HTMLFormElement>) => {
@@ -16,16 +20,22 @@ export const Formulario = () => {
   };
 
   return (
-    <form onSubmit={(e) => adicionarParticipante(e)}>
-      <input
-        ref={inputRef}
-        value={nome}
-        type="text"
-        onChange={(e) => setNome(e.target.value)}
-        placeholder="Insira os nomes dos participantes"
-      />
-      <button disabled={!nome}>Adicionar</button>
-      {mensagemDeErro && <p role="alert">{mensagemDeErro}</p>}
+    <form onSubmit={adicionarParticipante}>
+      <div className="grupo-input-btn">
+        <input
+          ref={inputRef}
+          value={nome}
+          onChange={(evento) => setNome(evento.target.value)}
+          type="text"
+          placeholder="Insira os nomes dos participantes"
+        />
+        <button disabled={!nome}>Adicionar</button>
+      </div>
+      {mensagemDeErro && (
+        <p className="alerta erro" role="alert">
+          {mensagemDeErro}
+        </p>
+      )}
     </form>
   );
 };
